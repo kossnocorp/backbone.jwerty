@@ -1,0 +1,29 @@
+{
+  "name": "backbone.jwerty",
+  "version": "0.1.0",
+  "author": "Sasha Koss <kossnocorp@gmail.com>",
+  "description": "jwerty integrated into Backbone.js events",
+
+  "devDependencies": {
+    "coffee-script": "",
+    "mocha":         "",
+    "chai":          "",
+    "sinon":         "",
+    "sinon-chai":    "",
+    "uglify-js":     "",
+    "jquery":        "",
+    "backbone":      "",
+    "jwerty":        "git+https://github.com/kossnocorp/jwerty.git#268f2b6e896acfdd63a99dbbebe8f4ac37205ea5",
+    "jsdom":         ""
+  },
+
+  "license": "MIT",
+
+  "engine": {
+    "node": ">=0.4"
+  },
+
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha ./spec/*_spec.coffee --compilers coffee:coffee-script -R spec -c"
+  }
+}
