@@ -61,12 +61,26 @@ describe 'Backbone jwerty integration', ->
         @view.delegateKeyboardEvents({}).should.eq @view
 
       it 'binds keyboard event to el', ->
-        @view.cancel = ->
-        @view.delegateKeyboardEvents('<esc>': 'cancel')
-        spy = sinon.spy(@view, 'cancel')
+        @view.cancel = sinon.spy()
+        @view.save   = sinon.spy()
+        @view.delegateKeyboardEvents('<esc>': 'cancel', '<enter>': 'save')
         jwerty.fire('esc', @$el)
-        spy.should.be.called
-        spy.restore()
+        jwerty.fire('enter', @$el)
+        @view.cancel.should.be.calledOnce
+        @view.save.should.be.calledOnce
+
+      it 'uses @events if argument is not passed', ->
+        klass = class extends Backbone.View
+          events:
+            '<esc>':   'cancel'
+            '<enter>': 'save'
+        view = new klass(el: @$el)
+        view.cancel = sinon.spy()
+        view.save   = sinon.spy()
+        jwerty.fire('esc', @$el)
+        jwerty.fire('enter', @$el)
+        view.cancel.should.be.calledOnce
+        view.save.should.be.calledOnce
 
     describe 'bind to selector', ->
 

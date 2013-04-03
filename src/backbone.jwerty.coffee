@@ -10,7 +10,7 @@ Backbone.View::delegateEvents = (events) ->
   filteredEvents = {}
   keyboardEvents = {}
 
-  for rule, callbackName of events
+  for rule, callbackName of (events || @events)
     list = if KEYBOARD_RULE.test(rule)
              keyboardEvents
            else
@@ -25,14 +25,15 @@ Backbone.View::delegateEvents = (events) ->
 
 Backbone.View::delegateKeyboardEvents = (events) ->
   for rule, callbackName of events
-    [__, keys, selector] = rule.split(KEYBOARD_RULE)
-    eventName            = 'keydown.delegateEvents' + @cid
-    callback             = (args...) => @[callbackName](args...)
-    jwertyEvent          = jwerty.event(keys, callback)
+    do (rule, callbackName) =>
+      [__, keys, selector] = rule.split(KEYBOARD_RULE)
+      eventName            = 'keydown.delegateEvents' + @cid
+      callback             = (args...) => @[callbackName](args...)
+      jwertyEvent          = jwerty.event(keys, callback)
 
-    if selector == ''
-      @$el.bind(eventName, jwertyEvent)
-    else
-      @$el.delegate(selector, eventName, jwertyEvent)
+      if selector == ''
+        @$el.bind(eventName, jwertyEvent)
+      else
+        @$el.delegate(selector, eventName, jwertyEvent)
 
   @
