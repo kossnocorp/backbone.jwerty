@@ -68,15 +68,39 @@ describe 'Backbone jwerty integration', ->
         spy.should.be.called
         spy.restore()
 
+    describe 'bind to selector', ->
+
+      it 'binds keyboard event to selector', ->
+        @$el  = $('<div><input></div>').appendTo('body')
+        view = new Backbone.View(el: @$el)
+        view.cancel = ->
+        view.delegateKeyboardEvents('<esc> input': 'cancel')
+        spy = sinon.spy(view, 'cancel')
+        jwerty.fire('esc', @$el.find('input'))
+        spy.should.be.called
+        spy.restore()
+
   describe '#undelegateEvents()', ->
 
     it 'unbinds keyboard events binded to @el', ->
       @$el  = $('<input>').appendTo('body')
-      @view = new Backbone.View(el: @$el)
-      @view.cancel = ->
-      @view.delegateKeyboardEvents('<esc>': 'cancel')
-      @view.undelegateEvents()
-      spy = sinon.spy(@view, 'cancel')
+      view = new Backbone.View(el: @$el)
+      view.cancel = ->
+      view.delegateKeyboardEvents('<esc>': 'cancel')
+      view.undelegateEvents()
+      spy = sinon.spy(view, 'cancel')
       jwerty.fire('esc', @$el)
       spy.should.not.be.called
       spy.restore()
+
+    it 'unbinds keyboard events delegated to selector', ->
+      @$el  = $('<div><input></div>').appendTo('body')
+      view = new Backbone.View(el: @$el)
+      view.cancel = ->
+      view.delegateKeyboardEvents('<esc> input': 'cancel')
+      spy = sinon.spy(view, 'cancel')
+      view.undelegateEvents()
+      jwerty.fire('esc', @$el.find('input'))
+      spy.should.not.be.called
+      spy.restore()
+
