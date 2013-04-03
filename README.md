@@ -2,13 +2,31 @@
 
 [![Build Status](https://secure.travis-ci.org/kossnocorp/backbone.jwerty.png?branch=master)](http://travis-ci.org/kossnocorp/backbone.jwerty)
 
-# Intro
+``` javascript
+var InlineField = Backbone.View.extend({
 
-TODO
+  events: {
+    '<esc> input':   'cancel',
+    '<enter> input': 'save'
+  },
+
+  cancel: function () { /* ... */ },
+
+  save: function () { /* ... */ }
+});
+```
+
+More info coming soon.
 
 ## API
 
-TODO
+### #delegateKeyboardEvents()
+
+Delegates keyboard events. Accept events map as first argument.
+
+``` js
+view.delegateKeyboardEvents({ '<esc> input': 'cancel', '<enter> input': 'save' });
+```
 
 ## Roadmap
 
