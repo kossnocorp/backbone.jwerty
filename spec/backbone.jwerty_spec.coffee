@@ -6,7 +6,7 @@ $ = global.$ = global.jQuery = require('jquery')
 chai      = require('chai')
 sinon     = require('sinon')
 sinonChai = require('sinon-chai')
-Backbone  = require.call({a:1, b:2}, 'backbone')
+Backbone  = require('backbone')
 jwerty    = require('jwerty').jwerty
 
 originalDelegateEventsSpy = sinon.spy(Backbone.View::, 'delegateEvents')
